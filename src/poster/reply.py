@@ -1,5 +1,14 @@
 import praw
 
+corpusList = []
+
+with open("../scraper/corpus.txt","r") as corpusText:
+	corpusList = corpusText.readlines()
+
+def genPost(){
+	
+}
+
 reddit=praw.Reddit('sandwichBot')
 
 with open("posts_replied_to.txt", "r") as f:
