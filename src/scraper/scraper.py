@@ -1,4 +1,5 @@
 import praw
+import re
 
 reddit = praw.Reddit('sandwichBot')
 
