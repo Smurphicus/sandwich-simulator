@@ -19,33 +19,35 @@ for line in corpusList:
 
 def genPost(seedWord):
 	post = ''
-	post += seedWord
 	prevWord = seedWord
 	while len(post) <= 480:
 		if corpus[prevWord] == {}:
 			break
 		else:
-			word = random.choice(list(corpus[prevWord]))
+			word = nextWord(prevWord)
 			post += (' ' + word)
 			prevWord = word
-
 	return post
 
-print(genPost('i'))
+def nextWord(prevWord):
+	choiceList = []
+	for key in corpus[prevWord]:
+		for i in range(corpus[prevWord][key]):
+			choiceList.append(key)
+	return random.choice(choiceList)
 
 reddit=praw.Reddit('sandwichBot')
 
 with open("posts_replied_to.txt", "r") as f:
 	posts_replied_to = f.readlines()
-	#posts_replied_to = list(filter(None, posts_replied_to))
+	posts_replied_to = list(filter(None, posts_replied_to))
 
 subreddit = reddit.subreddit('sandwichsimulator')
 
-for submission in subreddit.hot(limit=2):
+for submission in subreddit.new(limit=1):
 	if submission.id not in posts_replied_to:
-		if "sandwich me up" in submission.title.lower():
-			submission.reply(genPost('i'))
-			posts_replied_to.append(submission.id)
+		submission.reply(genPost('<$>'))
+		posts_replied_to.append(submission.id)
 with open("posts_replied_to.txt", "w") as f:
 	for post_id in posts_replied_to:
-		f.write(post_id + "\n")
+		f.write(post_id + '\n')

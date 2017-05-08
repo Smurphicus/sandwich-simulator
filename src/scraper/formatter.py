@@ -27,7 +27,7 @@ for line in corpus:
 	if not validLine(line):
 		corpus.remove(line)
 	else:
-		line = re.sub(r'[:()<>{}\[\]\-_=+^@$*,.!/\"0-9]',' ',line).lower()
+		line = re.sub(r'[:()<>{}\[\]\-_=+^@$*,/\"0-9]',' ',line).lower()
 		line = re.sub(r'\'','', line)
 		newLine = ''
 		for word in line.split():
